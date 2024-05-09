@@ -1,0 +1,7 @@
+
+-- user: root
+-- pass:   
+-- Host: localhost:3307
+-- Tempo de geração: 09/05/2024 às 00:41
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.0.30
