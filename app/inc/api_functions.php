@@ -1,6 +1,6 @@
 <?php
 
-function api_request($endpoint, $method, $variables = []){
+function api_request($endpoint, $method = 'GET', $variables = []){
 
     // iniciando o curl do cliente
     $client = curl_init();
