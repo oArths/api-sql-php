@@ -9,10 +9,18 @@ require_once('inc/api_functions.php');
 // ];
 
 //CHAMA A API PASSSADNO OS DADOS COMO ENDPOINT/METOFO/VARIAVEIS
-// $REPOMNSE = api_request('status', 'POST', $variables);
-$REPOMNSE = api_request('status', 'GET');
-
-// echo json_encode($REPOMNSE);
 echo '<pre>';
+$REPOMNSE = api_request('status', 'GET');
+print_r($REPOMNSE);
+
+
+$REPOMNSE = api_request('stahtus', 'GET');
+print_r($REPOMNSE);
+
+
+$REPOMNSE = api_request('get_all_clients', 'GET');
+print_r($REPOMNSE);
+
+$REPOMNSE = api_request('get_all_products', 'GET');
 print_r($REPOMNSE);
 ?>
