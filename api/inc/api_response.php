@@ -39,11 +39,51 @@ class api_response{
             $this->data['endpoint'] = $endpoint;
     }
     //==========================================================================================================
+    // retornando current request enpoint ou seja a rota atual que estya sendo requisitada
+    public function get_endpoint()
+    {  
+            return $this->data['endpoint'];
+    }
+    //==========================================================================================================
+    // adiconando uma nova key no data
+    public function add_do_data($key, $value)
+    {  
+            $this->data[$key] = $value;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //==========================================================================================================
     // putput do error da api
     public function api_request_error($message = '')
     {   
-        $this->data['status'] = 'ERROR';
-        $this->data['error_message'] = $message;
+        $data_error = [
+            'status' => 'ERROR',
+            'message' => $message,
+            'results' => null
+
+        ];
+
+        $this->data['data'] = $data_error;
         $this->send_response();
     }
     //==========================================================================================================
