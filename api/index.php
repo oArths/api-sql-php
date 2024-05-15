@@ -6,6 +6,7 @@
 require_once(dirname(__FILE__) . '/inc/config.php');
 require_once(dirname(__FILE__) . '/inc/api_response.php');
 require_once(dirname(__FILE__) . '/inc/api_logic.php');
+require_once(dirname(__FILE__) . '/inc/database.php');
 
 
 // INTANCIA DA api_response
