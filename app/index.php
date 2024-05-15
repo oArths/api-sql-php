@@ -9,18 +9,50 @@ require_once('inc/api_functions.php');
 // ];
 
 //CHAMA A API PASSSADNO OS DADOS COMO ENDPOINT/METOFO/VARIAVEIS
-echo '<pre>';
-$REPOMNSE = api_request('status', 'GET');
-print_r($REPOMNSE);
+// $results = api_request('status', 'GET');
+// print_r($results);
 
 
-$REPOMNSE = api_request('stahtus', 'GET');
-print_r($REPOMNSE);
+// $results = api_request('stahtus', 'GET');
+// print_r($results);
 
 
-$REPOMNSE = api_request('get_all_clients', 'GET');
-print_r($REPOMNSE);
+// $results = api_request('get_all_clients', 'GET');
+// print_r($results);
 
-$REPOMNSE = api_request('get_all_products', 'GET');
-print_r($REPOMNSE);
+// $results = api_request('get_all_products', 'GET');
+// print_r($results);
+
+
+//------------------------------------------------
+// fazendo requisição de todos os user ao banco e renderiando apenas o nome e email com o foreach
+$results = api_request('get_all_clients', 'GET');
+
+foreach($results['data']['results'] as $client)
+{
+    echo $client['name'] . ' - ' . $client['email'] . '<br>';
+}
+
+echo '<br>';
+//------------------------------------------------
+// fazendo requisição de todos os filmes ao banco e renderiando o titulo,synopsis e duração com  o foreach
+$results = api_request('get_all_products', 'GET');
+
+foreach($results['data']['results'] as $client)
+{
+    echo $client['title'] . '<br>' . $client['synopsis'] . '<br>' . $client['durationMinutes'] . '<br>';
+}
+echo '<br>';
+echo '<br>';
+echo '<br>';
+//------------------------------------------------
+// fazendo requisição de todos os filmes ao banco e renderiando o titulo,synopsis e duração com  o foreach
+$results = api_request('get_products', 'GET', ['only_active' => 1 ]);
+
+foreach($results['data']['results'] as $client)
+{
+    echo $client['title'] . '<br>' . $client['synopsis'] . '<br>' . $client['durationMinutes'] . '<br>';
+}
+echo '<br>';
+
 ?>
