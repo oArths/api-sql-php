@@ -13,7 +13,7 @@ class database{
 
         // PDO respomsavel por fazer a conexão com o banco
         $conn = new PDO(
-            "mysql:host=$host, 
+            "mysql:host=$host; 
             dbname=$db", 
             $user, 
             $pass, 
@@ -59,13 +59,62 @@ class database{
             return false;
         }
           //dps de executar todos os script anteriores fecha a conexao
-          if ($close_connection) {
-            $connection = null;
+          if ($close_conn) {
+            $conn = null;
         }
 
         //retorna os resultadp
         return $results;
 
+    }
+     //==================================================================
+     public function NON_QUERY($query, $parameters = null, $debug = true, $close_conn = true){
+        
+        //executes a query to the database (INSERT, UPDATE, DELETE)
+        $host = "localhost:3307";
+        $user = "root";
+        $pass = "";
+        $db = "my_database";
+
+        // PDO respomsavel por fazer a conexão com o banco
+        $conn = new PDO(
+            "mysql:host=$host; 
+            dbname=$db", 
+            $user, 
+            $pass, 
+            // array fala que vai ser um array
+            // PDO:: define que vamos acessar ao no pdo
+            //ATTR_PERSISTENT => true definie que a cenexão com o banco vai persistire que não sera
+            // necessario fazer uma nova a toda execução se não for definido como true ele fara umna nova conexão toda vez
+            array(PDO::ATTR_PERSISTENT => true)); 
+
+        if($debug){
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        }
+        
+        //execution
+        $conn->beginTransaction();
+        try {
+            if ($parameters != null) {
+                $gestor = $conn->prepare($query);
+                $gestor->execute($parameters);
+            } else {
+                $gestor = $conn->prepare($query);
+                $gestor->execute();
+            }
+            $conn->commit();
+        } catch (PDOException $e) {            
+            $conn->rollBack();
+            return false;
+        }
+
+        //close conn
+        if ($close_conn) {
+            $conn = null;
+        }
+        
+        return true;
     }
 }
 
