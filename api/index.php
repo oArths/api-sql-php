@@ -36,8 +36,14 @@ if($api_response->get_method() == 'GET'){
     $params = $_GET;
 }
 elseif ($api_response->get_method() == 'POST'){
-    $api_response->set_endpoint($_POST['endpoint']);
-    $params = $_POST;
+    
+    $raw_data = file_get_contents('php://input');
+    $data = json_decode($raw_data, true);
+
+    $api_response->set_endpoint($data['endpoint']);
+    $params = $data;
+    // $api_response->set_endpoint($_POST['endpoint']);
+    // $params = $_POST;
 
 }
 
