@@ -52,7 +52,20 @@ class api_logic{
 
         ];       
     }
-    public function cretate_new_user(){
+    public function create_new_user(){
+
+        //chaca se todfos os dados estãso presentes
+       if(
+        !isset($this->params['name']) ||
+        !isset($this->params['email']) ||       
+        !isset($this->params['username']) ||      
+        !isset($this->params['password'])       
+    ){
+        return $this->erro_reponse('campos insuficientes');
+
+
+    }
+
         $params = [
             ':name' => $this->params['name'],
             ':email' => $this->params['email'],
@@ -60,13 +73,22 @@ class api_logic{
             ':password' => $this->params['password'],
         ];
         $db = new database;
-        $db-> QUERY("
-        INSERT INTO user VALUES
-        (:name,:email,:username,:password)", $params);
+        // verifica se todos os dados estãio presentes
+        //verifica se o cliente ja existe
+        // so dps vamos guardar os dados
+
+
+
+
+
+
+        // $db-> QUERY("
+        // INSERT INTO user (name, email, username, password) VALUES
+        // (:name,:email,:username,:password)", $params);
         return [
             'status' => 'SUCCESS',
             'message' => 'usuario adicionado com sucesso',
-            'results' => $params
+            'results' => []
 
         ];       
     }
