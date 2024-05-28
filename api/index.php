@@ -31,21 +31,18 @@ $params = null;
 
 
 // SETA A ENDPOINT(ROTA) DE ACORDO COM O METHOD E GUARDA OS POSSIVEIS PARAMETROS
-if($api_response->get_method() == 'GET'){
+if ($api_response->get_method() == 'GET') {
     $api_response->set_endpoint($_GET['endpoint']);
     $params = $_GET;
 }
 elseif ($api_response->get_method() == 'POST'){
-    
+    // Captura o JSON bruto do corpo da requisição com
     $raw_data = file_get_contents('php://input');
     $data = json_decode($raw_data, true);
-
-    $api_response->set_endpoint($data['endpoint']);
+    $api_response->set_endpoint($_GET['endpoint']);
     $params = $data;
-    // $api_response->set_endpoint($_POST['endpoint']);
-    // $params = $_POST;
-
 }
+
 
 // preparando a logica da api falando qual endpoint vamos usar e quais parametros
 $api_logic = new api_logic($api_response->get_endpoint(), $params);

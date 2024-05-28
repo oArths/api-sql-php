@@ -53,8 +53,9 @@ class api_logic{
         ];       
     }
     public function create_new_user(){
-
-        //chaca se todfos os dados estãso presentes
+        $db = new database;
+        
+        //chaca se todos os dados estãso presentes
        if(
         !isset($this->params['name']) ||
         !isset($this->params['email']) ||       
@@ -62,7 +63,20 @@ class api_logic{
         !isset($this->params['password'])       
     ){
         return $this->erro_reponse('campos insuficientes');
+    }
+    // verficando sse ja existe os dados no banco
+    $params = [
+        ':name' => $this->params['name'],
+        ':email' => $this->params['email']
+    ];
 
+    $results = $db->QUERY("
+    SELECT id FROM user
+    WHERE 
+    name = :name OR email = :email
+    ", $params);
+    if(count($results) != 0 ){
+        return $this->erro_reponse('Cliente ja cadastrado');
 
     }
 
@@ -72,19 +86,13 @@ class api_logic{
             ':username' => $this->params['username'],
             ':password' => $this->params['password'],
         ];
-        $db = new database;
         // verifica se todos os dados estãio presentes
         //verifica se o cliente ja existe
         // so dps vamos guardar os dados
 
-
-
-
-
-
-        // $db-> QUERY("
-        // INSERT INTO user (name, email, username, password) VALUES
-        // (:name,:email,:username,:password)", $params);
+        $db-> QUERY("
+        INSERT INTO user (name, email, username, password) VALUES
+        (:name,:email,:username,:password)", $params);
         return [
             'status' => 'SUCCESS',
             'message' => 'usuario adicionado com sucesso',
@@ -145,6 +153,17 @@ class api_logic{
             'message' => '',
             'results' => $results
         ];  
+
+    }
+    //---------------------------------------------------------------
+    // funcção so pra teste de post
+    public function create_new_client (){
+
+        return [
+            'status' => 'SUCCESS',
+            'message' => '',
+            'results' => $this->params
+        ]; 
 
     }
 }
